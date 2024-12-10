@@ -1,3 +1,5 @@
+.PHONY:	clean run
+
 include ../cpu.mk
 
 TARGETS=receiver sender 
@@ -20,7 +22,15 @@ run_sender: sender
 run_receiver: receiver
 	taskset -c $(RECEIVER_CPU) ./receiver
 
-.PHONY:	clean
+run: $(TARGETS)
+	@taskset -c $(RECEIVER_CPU) ./receiver & \
+	taskset -c $(SENDER_CPU) ./sender
+
+loop:
+	@for i in $(shell seq 1 5); do \
+        taskset -c $(RECIEVER_CPU) ./receiver & \
+        taskset -c $(SENDER_CPU) ./sender;
+	 done
 
 clean:
 	$(RM) *.o $(HELPERS) $(TARGETS) 

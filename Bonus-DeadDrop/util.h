@@ -19,6 +19,13 @@
 #define ADDR_PTR uint64_t 
 #define CYCLES uint32_t
 
+#define L1_SIZE (32 * 1024)
+#define L2_SIZE (256 * 1024)
+#define LINE_SIZE 64
+#define SAMPLES 100
+#define DELAY 300
+#define WAY 4
+
 CYCLES measure_one_block_access_time(ADDR_PTR addr);
 
 // You Should Not Use clflush in your final submission
